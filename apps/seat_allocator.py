@@ -104,8 +104,6 @@ if st.sidebar.button("Check"):
         ],
     }
 
-    vert_space = '<div style="padding: 180px 5px;"></div>'
-    st.markdown(vert_space, unsafe_allow_html=True)
 
     # Display the line chart
     st_echarts(options=option, height="400px")
