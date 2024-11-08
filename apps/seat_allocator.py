@@ -1,9 +1,16 @@
 import streamlit as st
 import numpy as np
 import joblib
+import random
+import math
 import json
 import os
 from streamlit_echarts import st_echarts
+
+def floorVariable(value, percentage=3):
+    random_factor = percentage / 100.0 * value
+    random_value = value + random.uniform(-random_factor, random_factor)
+    return math.floor(random_value)
 
 # Paths for the data and model
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -60,11 +67,11 @@ if st.sidebar.button("Check"):
     closing_rank, opening_rank = prediction[0]  # Unpack both ranks from the prediction
 
     # Display the prediction result
-    st.write(f"Predicted Closing Rank for your selection: {closing_rank:.2f}")
-    st.write(f"Predicted Opening Rank for your selection: {opening_rank:.2f}")
+    st.write(f"Predicted Closing Rank for your selection: {closing_rank:.0f}")
+    st.write(f"Predicted Opening Rank for your selection: {opening_rank:.0f}")
 
     # Prepare data for the line chart for all years from 2016 to 2026
-    years = list(range(2016, 2027))
+    years = list(range(2020, 2027))
     opening_ranks = []
     closing_ranks = []
 
@@ -73,8 +80,8 @@ if st.sidebar.button("Check"):
         X_yearly = np.array([[institute_encoded, gender_encoded, year, program_encoded, seat_encoded, disability_encoded]])
         prediction = model.predict(X_yearly)
         closing_rank, opening_rank = prediction[0]
-        closing_ranks.append(closing_rank)
-        opening_ranks.append(opening_rank)
+        closing_ranks.append(floorVariable(closing_rank))
+        opening_ranks.append(floorVariable(opening_rank))
 
     # Define options for the line chart
     option = {
