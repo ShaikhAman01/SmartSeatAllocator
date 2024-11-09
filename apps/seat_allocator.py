@@ -89,6 +89,7 @@ def apply_percentage_change(value):
         new_value = value - (value * percentage / 100)
     
     return math.floor(new_value)
+
 # Cache data loading
 @st.cache_data
 def load_json(file_path: str) -> Dict[str, Any]:
@@ -165,7 +166,7 @@ class CollegeSeatPredictor:
                 year = st.slider(
                     "Select Year",
                     min_value=2016,
-                    max_value=2028,
+                    max_value=2026,
                     value=2025,
                     help="Choose the year for prediction"
                 )
