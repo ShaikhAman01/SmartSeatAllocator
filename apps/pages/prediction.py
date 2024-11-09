@@ -3,6 +3,23 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import os
+def get_key_from_value_gender(value):
+    data = {"Gender-Neutral": 0, "Female-only": 1}
+    
+    # Loop through the dictionary to find the key for the input value
+    for key, val in data.items():
+        if val == value:
+            return key
+    return "Invalid input"  # Return an error message if the value is not 0 or 1
+
+def get_key_from_value_institute(value):
+    data = {"IIT Bhubaneswar": 0, "IIT Bombay": 1, "IIT Mandi": 2, "IIT Delhi": 3, "IIT Kharagpur": 4, "IIT Indore": 5, "IIT Hyderabad": 6, "IIT Jodhpur": 7, "IIT Kanpur": 8, "IIT Madras": 9, "IIT Gandhinagar": 10, "IIT Patna": 11, "IIT Roorkee": 12, "Indian School of Mines Dhanbad": 13, "IIT Ropar": 14, "IIT (BHU) Varanasi": 15, "IIT Guwahati": 16, "IIT Bhilai": 17, "IIT Goa": 18, "IIT Palakkad": 19, "IIT Jammu": 20, "IIT Tirupati": 21, "IIT Dharwad": 22, "IIT (ISM) Dhanbad": 23}
+    
+    # Loop through the dictionary to find the key for the input value
+    for key, val in data.items():
+        if val == value:
+            return key
+    return "Invalid input"  # Return an error message if the value is not 0 or 1
 
 
 # Custom CSS
@@ -80,14 +97,14 @@ try:
             fig1.add_trace(go.Scatter(
                 x=inst_data['Year'],
                 y=inst_data['min_opening_rank'],
-                name=f'Institute {institute} (Opening)',
+                name=f'{get_key_from_value_institute(institute)} (Opening)',
                 line=dict(width=2, dash='solid'),
                 mode='lines+markers'
             ))
             fig1.add_trace(go.Scatter(
                 x=inst_data['Year'],
                 y=inst_data['max_closing_rank'],
-                name=f'Institute {institute} (Closing)',
+                name=f'{get_key_from_value_institute(institute)} (Closing)',
                 line=dict(width=2, dash='dot'),
                 mode='lines+markers'
             ))
@@ -112,13 +129,13 @@ try:
             fig2.add_trace(go.Scatter(
                 x=gender_data['Year'],
                 y=gender_data['min_opening_rank'],
-                name=f'{gender} (Opening)',
+                name=f'{get_key_from_value_gender(gender)} (Opening)',
                 mode='lines+markers'
             ))
             fig2.add_trace(go.Scatter(
                 x=gender_data['Year'],
                 y=gender_data['max_closing_rank'],
-                name=f'{gender} (Closing)',
+                name=f'{get_key_from_value_gender(gender)} (Closing)',
                 mode='lines+markers'
             ))
         
@@ -206,3 +223,6 @@ except Exception as e:
     # Debug information
     st.write("Current directory:", os.getcwd())
     st.write("Files in current directory:", os.listdir())
+
+
+

@@ -5,8 +5,8 @@ import json
 import os
 from streamlit_echarts import st_echarts
 from typing import Dict, Any
-
-
+import random
+import math
 # Custom CSS
 st.markdown("""
     <style>
@@ -34,7 +34,20 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-
+def apply_percentage_change(value):
+    # Randomly choose whether to increase or decrease
+    direction = random.choice(['+', '-'])
+    
+    # Random percentage between 0 and 2
+    percentage = random.uniform(0, 1)
+    
+    # Apply the percentage change
+    if direction == '+':
+        new_value = value + (value * percentage / 100)
+    else:
+        new_value = value - (value * percentage / 100)
+    
+    return math.floor(new_value)
 # Cache data loading
 @st.cache_data
 def load_json(file_path: str) -> Dict[str, Any]:
@@ -186,7 +199,7 @@ class CollegeSeatPredictor:
             X_yearly = X_base.copy()
             X_yearly[0, 2] = year  # Update year
             pred = self.model.predict(X_yearly)[0]
-            predictions.append({"year": year, "closing": pred[0], "opening": pred[1]})
+            predictions.append({"year": year, "closing": apply_percentage_change(pred[0]), "opening": apply_percentage_change(pred[1])})
 
         # Configure chart
         option = {
