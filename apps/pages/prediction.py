@@ -3,6 +3,14 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import os
+
+
+st.set_page_config(
+    page_title="Seat Allocator",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 def get_key_from_value_gender(value):
     data = {"Gender-Neutral": 0, "Female-only": 1}
     
@@ -38,6 +46,7 @@ st.markdown("""
             padding: 1rem;
             border-radius: 0.5rem;
         }
+            
     </style>
 """, unsafe_allow_html=True)
 

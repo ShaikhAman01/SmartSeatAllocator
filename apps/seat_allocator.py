@@ -7,6 +7,14 @@ from streamlit_echarts import st_echarts
 from typing import Dict, Any
 import random
 import math
+
+
+st.set_page_config(
+    page_title="Seat Allocator",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # Custom CSS
 st.markdown("""
     <style>
@@ -32,8 +40,41 @@ st.markdown("""
         margin-bottom: 2rem;
         
     }
+             .block-container {max-width: 95%;}
+        .stMetric { 
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .streamlit-expanderHeader {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        div[data-testid="stHorizontalBlock"] > div {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 24px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 10px 20px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .stTabs [aria-selected="true"] {
+            background-color: #1f77b4;
+            color: white;
+        }
+            
     </style>
 """, unsafe_allow_html=True)
+
+
+
 def apply_percentage_change(value):
     # Randomly choose whether to increase or decrease
     direction = random.choice(['+', '-'])
@@ -95,7 +136,7 @@ class CollegeSeatPredictor:
         }
 
     def create_ui(self):
-        # Main content area
+        # Header
         st.title("College Seat Allocation Predictor")
         
         # Create two columns for the layout
